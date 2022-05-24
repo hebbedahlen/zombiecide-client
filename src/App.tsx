@@ -1,11 +1,24 @@
-import "./App.css"
+import { useState, useEffect } from "react"
 
 function App() {
-  fetch("api/WeatherForecasts")
+  const [forecast, setForecast] = useState([])
+
+  useEffect(() => {
+    fetch("/api/WeatherForecast")
+      .then((response) => response.json())
+      .then((result) => setForecast(result))
+  }, [])
 
   return (
     <div className="App">
-      <header className="App-header">Hello</header>
+      <header className="App-header">Zombiecide weather</header>
+      <ul>
+        {forecast.map((item: any, index) => (
+          <li key={index}>
+            {item.summary} {item.date}
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
